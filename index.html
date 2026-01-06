@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج محضر اجتماع تربوي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .form-header h1 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .form-header .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .form-section {
+            padding: 25px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        
+        .form-section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2c3e50;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .section-title .icon {
+            font-size: 1.4em;
+        }
+        
+        .info-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .info-item label {
+            display: block;
+            color: #555;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .info-item input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            background-color: #fafafa;
+        }
+        
+        .info-item input:focus {
+            outline: none;
+            border-color: #3498db;
+            background-color: white;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background-color: #f8f9fa;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            background-color: #e8f4f8;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .agenda-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 4px solid #3498db;
+        }
+        
+        .agenda-item h4 {
+            color: #2980b9;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .decision-box {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .decision-option {
+            padding: 6px 15px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .decision-option.approved {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .decision-option.postponed {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .decision-option.review {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .decision-option input[type="radio"] {
+            margin: 0;
+        }
+        
+        .action-item {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-right: 4px solid #4caf50;
+        }
+        
+        .action-item h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .action-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        .action-field {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .action-field label {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .action-field input {
+            padding: 8px;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .status-bar {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .status-option {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .status-option.in-progress {
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border: 1px solid #90caf9;
+        }
+        
+        .status-option.completed {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+            border: 1px solid #81c784;
+        }
+        
+        .status-option.delayed {
+            background-color: #ffcdd2;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+        
+        .notes-section textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 0.95em;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            background-color: #fafafa;
+        }
+        
+        .notes-section textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            background-color: white;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .signature-box {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .signature-box h5 {
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .signature-line {
+            border-bottom: 2px solid #333;
+            margin-bottom: 8px;
+            height: 40px;
+        }
+        
+        .signature-box span {
+            font-size: 0.8em;
+            color: #888;
+        }
+        
+        .form-footer {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            text-align: center;
+            border-top: 2px solid #dee2e6;
+        }
+        
+        .form-footer p {
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+        
+        .footer-icons {
+            font-size: 1.5em;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .form-container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .info-row {
+                flex-direction: column;
+            }
+            .decision-box, .status-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <div class="icon">📋</div>
+            <h1>محضر اجتماع تربوي</h1>
+            <p>نموذج رسمي لتوثيق اجتماعات الإشراف التربوي</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">👥</span>
+                <span>المعلومات الأساسية والحضور</span>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <label>اسم المدرسة</label>
+                    <input type="text" placeholder="أدخل اسم المدرسة">
+                </div>
+                <div class="info-item">
+                    <label>التاريخ</label>
+                    <input type="text" placeholder="___/___/1445هـ">
+                </div>
+                <div class="info-item">
+                    <label>الوقت</label>
+                    <input type="text" placeholder="من ___:___ إلى ___:___">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <label>نوع الاجتماع</label>
+                    <input type="text" placeholder="例: اجتماع طارئ / دوري / تخطيطي">
+                </div>
+                <div class="info-item">
+                    <label>مكان الانعقاد</label>
+                    <input type="text" placeholder="أدخل مكان الاجتماع">
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <label>الحضور</label>
+                    <input type="text" placeholder="أسماء الحضور (فصل بين الاسم بفاصلة)">
+                </div>
+                <div class="info-item">
+                    <label>الغياب</label>
+                    <input type="text" placeholder="أسماء الغائبين">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">🎯</span>
+                <span>الهدف من الاجتماع</span>
+            </div>
+            <div class="info-row">
+                <div class="info-item" style="width: 100%;">
+                    <label>حدد بوضوح الهدف الرئيسي من هذا الاجتماع</label>
+                    <input type="text" placeholder="例如: مناقشة نتائج الاختبارات ووضع خطة للتحسين">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">📑</span>
+                <span>جدول الأعمال والقرارات</span>
+            </div>
+            
+            <div class="agenda-item">
+                <h4>البند الأول</h4>
+                <div class="info-row">
+                    <div class="info-item">
+                        <label>الموضوع</label>
+                        <input type="text" placeholder="例如: مراجعة نتائج الاختبارات">
+                    </div>
+                    <div class="info-item">
+                        <label>المُقدم</label>
+                        <input type="text" placeholder="اسم المُقدم">
+                    </div>
+                    <div class="info-item">
+                        <label>المدة</label>
+                        <input type="text" placeholder="___ دقيقة">
+                    </div>
+                </div>
+                <div class="info-item" style="width: 100%;">
+                    <label>ملخص المناقشة</label>
+                    <input type="text" placeholder="例如: نوقشت النتائج وتم تحديد نقاط القوة والضعف">
+                </div>
+                <div class="decision-box">
+                    <label class="decision-option approved">
+                        <input type="radio" name="decision1">
+                        <span>✅ معتمد</span>
+                    </label>
+                    <label class="decision-option postponed">
+                        <input type="radio" name="decision1">
+                        <span>⏸️ مؤجل</span>
+                    </label>
+                    <label class="decision-option review">
+                        <input type="radio" name="decision1">
+                        <span>🔍 مراجع</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <h4>البند الثاني</h4>
+                <div class="info-row">
+                    <div class="info-item">
+                        <label>الموضوع</label>
+                        <input type="text" placeholder="例如: خطة المراجعة">
+                    </div>
+                    <div class="info-item">
+                        <label>المُقدم</label>
+                        <input type="text" placeholder="اسم المُقدم">
+                    </div>
+                    <div class="info-item">
+                        <label>المدة</label>
+                        <input type="text" placeholder="___ دقيقة">
+                    </div>
+                </div>
+                <div class="info-item" style="width: 100%;">
+                    <label>ملخص المناقشة</label>
+                    <input type="text" placeholder="例如: تم اعتماد خطة المراجعة">
+                </div>
+                <div class="decision-box">
+                    <label class="decision-option approved">
+                        <input type="radio" name="decision2">
+                        <span>✅ معتمد</span>
+                    </label>
+                    <label class="decision-option postponed">
+                        <input type="radio" name="decision2">
+                        <span>⏸️ مؤجل</span>
+                    </label>
+                    <label class="decision-option review">
+                        <input type="radio" name="decision2">
+                        <span>🔍 مراجع</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="agenda-item">
+                <h4>البند الثالث</h4>
+                <div class="info-row">
+                    <div class="info-item">
+                        <label>الموضوع</label>
+                        <input type="text" placeholder="例如: توزيع المهام">
+                    </div>
+                    <div class="info-item">
+                        <label>المُقدم</label>
+                        <input type="text" placeholder="اسم المُقدم">
+                    </div>
+                    <div class="info-item">
+                        <label>المدة</label>
+                        <input type="text" placeholder="___ دقيقة">
+                    </div>
+                </div>
+                <div class="info-item" style="width: 100%;">
+                    <label>ملخص المناقشة</label>
+                    <input type="text" placeholder="例如: تم توزيع المهام على المعلمين">
+                </div>
+                <div class="decision-box">
+                    <label class="decision-option approved">
+                        <input type="radio" name="decision3">
+                        <span>✅ معتمد</span>
+                    </label>
+                    <label class="decision-option postponed">
+                        <input type="radio" name="decision3">
+                        <span>⏸️ مؤجل</span>
+                    </label>
+                    <label class="decision-option review">
+                        <input type="radio" name="decision3">
+                        <span>🔍 مراجع</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">✅</span>
+                <span>القرارات والمتابعة</span>
+            </div>
+            
+            <div class="action-item">
+                <h4>القرار الأول</h4>
+                <div class="action-details">
+                    <div class="action-field" style="grid-column: span 2;">
+                        <label>محتوى القرار</label>
+                        <input type="text" placeholder="例如: إعداد نماذج مراجعة">
+                    </div>
+                    <div class="action-field">
+                        <label>المسؤول</label>
+                        <input type="text" placeholder="اسم المسؤول">
+                    </div>
+                    <div class="action-field">
+                        <label>الموعد النهائي</label>
+                        <input type="text" placeholder="___/___">
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <label class="status-option in-progress">
+                        <input type="radio" name="status1">
+                        <span>⏳ قيد التنفيذ</span>
+                    </label>
+                    <label class="status-option completed">
+                        <input type="radio" name="status1">
+                        <span>✅ مكتمل</span>
+                    </label>
+                    <label class="status-option delayed">
+                        <input type="radio" name="status1">
+                        <span>⚠️ متأخر</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="action-item">
+                <h4>القرار الثاني</h4>
+                <div class="action-details">
+                    <div class="action-field" style="grid-column: span 2;">
+                        <label>محتوى القرار</label>
+                        <input type="text" placeholder="例如: اجتماع متابعة">
+                    </div>
+                    <div class="action-field">
+                        <label>المسؤول</label>
+                        <input type="text" placeholder="اسم المسؤول">
+                    </div>
+                    <div class="action-field">
+                        <label>الموعد النهائي</label>
+                        <input type="text" placeholder="___/___">
+                    </div>
+                </div>
+                <div class="status-bar">
+                    <label class="status-option in-progress">
+                        <input type="radio" name="status2">
+                        <span>⏳ قيد التنفيذ</span>
+                    </label>
+                    <label class="status-option completed">
+                        <input type="radio" name="status2">
+                        <span>✅ مكتمل</span>
+                    </label>
+                    <label class="status-option delayed">
+                        <input type="radio" name="status2">
+                        <span>⚠️ متأخر</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">📝</span>
+                <span>الملاحظات والتوصيات</span>
+            </div>
+            <div class="notes-section">
+                <label>ملاحظات إضافية</label>
+                <textarea placeholder="例如: أي ملاحظات أو نقاط مهمة تم مناقشتها"></textarea>
+            </div>
+            <div class="notes-section" style="margin-top: 15px;">
+                <label>توصيات مقترحة للاجتماع القادم</label>
+                <textarea placeholder="例如: التوصيات التي يمكن تطبيقها"></textarea>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">📅</span>
+                <span>الاجتماع القادم</span>
+            </div>
+            <div class="info-row">
+                <div class="info-item">
+                    <label>التاريخ</label>
+                    <input type="text" placeholder="___/___/1445هـ">
+                </div>
+                <div class="info-item">
+                    <label>الوقت</label>
+                    <input type="text" placeholder="___:___">
+                </div>
+                <div class="info-item">
+                    <label>المكان</label>
+                    <input type="text" placeholder="مكتب الإشراف">
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="section-title">
+                <span class="icon">✍️</span>
+                <span>التوقيعات</span>
+            </div>
+            <div class="signature-section">
+                <div class="signature-box">
+                    <h5>مديرة الاجتماع</h5>
+                    <div class="signature-line"></div>
+                    <span>الاسم والتوقيع</span>
+                </div>
+                <div class="signature-box">
+                    <h5>مُقرّر الجلسة</h5>
+                    <div class="signature-line"></div>
+                    <span>الاسم والتوقيع</span>
+                </div>
+                <div class="signature-box">
+                    <h5>مُسجّل المحضر</h5>
+                    <div class="signature-line"></div>
+                    <span>الاسم والتوقيع</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-footer">
+            <div class="footer-icons">📚 ✨ 🎯</div>
+            <p>تم إعداد هذا النموذج ضمن برنامج الإشراف التربوي</p>
+            <p>المتابعة ضمان النجاح</p>
+        </div>
+    </div>
+</body>
+</html>
